@@ -1,11 +1,11 @@
 library(Tax4Fun2)
 library(seqinr)
-setwd("C:/Users/owner/Desktop/R/Analysis/1_Test")
+setwd("C:/Users/owner/Desktop/R/Analysis/1_Test") #Change
+dir.create("Results")
 
 PATH1 = "C:/Users/owner/Desktop/R/Database/Tax4Fun2_ReferenceData_v2"
 PATH2 = "C:/Users/owner/Desktop/R/Database/OneProkaryoticGenome.fasta"
-dir.create("C:/Users/owner/Desktop/R/Analysis/1_Test/Ref99NR_Test")
-Temp_folder ="C:/Users/owner/Desktop/R/Analysis/1_Test/Ref99NR_Test"
+Temp_folder ="Results"
 
 #Step 2: Generate your own reference datasets
 #1. Extracting SSU seqeunces (16S rRNA and 18S rRNA)
