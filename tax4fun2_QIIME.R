@@ -15,7 +15,7 @@ extractSSU(genome_file = PATH2, file_extension = "fasta", path_to_reference_data
 assignFunction(genome_file = PATH2, file_extension = "fasta", path_to_reference_data = PATH1, num_of_threads = 1, fast = TRUE)
 
 #3. Generate the reference data
-generateUserData(path_to_reference_data =PATH, path_to_user_data = ".", name_of_user_data = "User_Ref0", SSU_file_extension = "_16SrRNA.ffn", KEGG_file_extension = "_funPro.txt")
+generateUserData(path_to_reference_data =PATH1, path_to_user_data = ".", name_of_user_data = "User_Ref0", SSU_file_extension = "_16SrRNA.ffn", KEGG_file_extension = "_funPro.txt")
 
 
 #Step 3: Making functional predictions
