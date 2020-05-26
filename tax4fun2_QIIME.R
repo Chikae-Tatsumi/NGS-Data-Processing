@@ -4,6 +4,7 @@ setwd("C:/Users/owner/Desktop/R/Analysis/1_Test")
 
 PATH1 = "C:/Users/owner/Desktop/R/Database/Tax4Fun2_ReferenceData_v2"
 PATH2 = "C:/Users/owner/Desktop/R/Database/OneProkaryoticGenome.fasta"
+dir.create("C:/Users/owner/Desktop/R/Analysis/1_Test/Ref99NR_Test")
 Temp_folder ="C:/Users/owner/Desktop/R/Analysis/1_Test/Ref99NR_Test"
 
 #Step 2: Generate your own reference datasets
