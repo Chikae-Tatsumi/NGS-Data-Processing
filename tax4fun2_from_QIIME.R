@@ -1,6 +1,6 @@
 library(Tax4Fun2)
 library(seqinr)
-setwd("~/R/Analysis/1_Test") #Change
+setwd("~/R/Analysis/1_Test/tax4fun2") #Change
 dir.create("OUTDIR")
 
 DATABASE1 = "~/R/Database/Tax4Fun2_ReferenceData_v2"
