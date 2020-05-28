@@ -1,3 +1,6 @@
+#DADA2 ITS Pipeline Workflow (1.8)
+#See https://benjjneb.github.io/dada2/ITS_workflow.html
+
 #Getting ready
 
 library(dada2)
@@ -146,8 +149,6 @@ write.table(seqtab.nochim, file="seqtabnochim.txt")
 
 library(phyloseq); packageVersion("phyloseq")
 library(Biostrings); packageVersion("Biostrings")
-library(ggplot2); packageVersion("ggplot2")
-theme_set(theme_bw())
 
 samples.out<-rownames(seqtab.nochim)
 ps <- phyloseq(otu_table(seqtab.nochim, taxa_are_rows=FALSE), 
