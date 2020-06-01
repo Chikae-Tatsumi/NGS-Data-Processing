@@ -8,7 +8,6 @@ library(ShortRead); packageVersion("ShortRead")
 library(phyloseq); packageVersion("phyloseq")
 library(Biostrings); packageVersion("Biostrings")
 
-
 DATABASE = "~/R/Database/sh_general_release_dynamic_02.02.2019.fasta"
 setwd("~/R/Analysis/1_Test/ITS")  ## CHANGE ME to the directory containing the fastq files.
 list.files()
@@ -161,4 +160,3 @@ ps
 otu_table.t<-t(ps@otu_table)
 ps.t<-cbind(otu_table.t,ps@tax_table)
 write.table(ps.t,  file="ASV_table.txt")
-
