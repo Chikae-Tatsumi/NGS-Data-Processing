@@ -3,12 +3,11 @@
 
 #Getting ready
 
-library(dada2)
-packageVersion("dada2")
-library(ShortRead)
-packageVersion("ShortRead")
-library(Biostrings)
-packageVersion("Biostrings")
+library(dada2); packageVersion("dada2")
+library(ShortRead); packageVersion("ShortRead")
+library(phyloseq); packageVersion("phyloseq")
+library(Biostrings); packageVersion("Biostrings")
+
 
 DATABASE = "~/R/Database/sh_general_release_dynamic_02.02.2019.fasta"
 setwd("~/R/Analysis/1_Test/ITS")  ## CHANGE ME to the directory containing the fastq files.
@@ -146,9 +145,6 @@ rownames(taxa.print) <- NULL
 head(taxa.print)
 write.table(taxa, file="taxonomy.txt")
 write.table(seqtab.nochim, file="seqtabnochim.txt")
-
-library(phyloseq); packageVersion("phyloseq")
-library(Biostrings); packageVersion("Biostrings")
 
 samples.out<-rownames(seqtab.nochim)
 ps <- phyloseq(otu_table(seqtab.nochim, taxa_are_rows=FALSE), 
