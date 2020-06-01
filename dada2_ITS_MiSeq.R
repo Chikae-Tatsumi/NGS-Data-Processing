@@ -135,8 +135,7 @@ head(track)
 write.table(track,file="track.txt")
 
 #Assign taxonomy
-unite.ref <- DATABASE  
-taxa <- assignTaxonomy(seqtab.nochim, unite.ref, multithread = TRUE, tryRC = TRUE)
+taxa <- assignTaxonomy(seqtab.nochim, DATABASE, multithread = TRUE, tryRC = TRUE)
 
 taxa.print <- taxa  # Removing sequence rownames for display only
 rownames(taxa.print) <- NULL
