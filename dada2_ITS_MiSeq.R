@@ -2,7 +2,6 @@
 #See https://benjjneb.github.io/dada2/ITS_workflow.html
 
 #Getting ready
-
 library(dada2); packageVersion("dada2")
 library(ShortRead); packageVersion("ShortRead")
 library(phyloseq); packageVersion("phyloseq")
