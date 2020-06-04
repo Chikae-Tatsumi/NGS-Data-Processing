@@ -101,3 +101,9 @@ ps
 otu_table.t<-t(ps@otu_table)
 ps.t<-cbind(otu_table.t,ps@tax_table)
 write.table(ps.t,  file="ASV_table.txt")
+
+# Rarefication
+ps.rarefied = rarefy_even_depth(ps, rngseed=1, sample.size=0.9*min(sample_sums(ps)), replace=F)
+otu_table.t<-t(ps.rarefied@otu_table)
+ps.t<-cbind(otu_table.t,ps.rarefied@tax_table)
+write.table(ps.t,  file="rarefied_ASV_table.txt")
