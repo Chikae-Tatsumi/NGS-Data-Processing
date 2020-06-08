@@ -24,3 +24,5 @@ makeFunctionalPrediction(path_to_otu_table = "17_otu_97_table_taxonomy_tax4fun.t
 
 #Step 4: Calculating (multi-)functional redundancy indices (experimental)
 calculateFunctionalRedundancy(path_to_otu_table = "17_otu_97_table_taxonomy_tax4fun.txt", path_to_reference_data = "Tax4Fun2_ReferenceData_v2", path_to_temp_folder = "Tax4Fun2", database_mode = "Ref99NR", min_identity_to_reference = 0.97)
+
+# Don't forget to move the output file (Tax4Fun2) for your project file
