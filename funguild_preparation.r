@@ -5,4 +5,4 @@ ASV.table <- ASV.table [,1:(ncol(ASV.table)-7)]
 ASV.table <- cbind (ASV.table, taxonomy)
 ASV.table <- cbind (rownames(ASV.table),ASV.table)
 colnames(ASV.table)[1] <- "OTU ID"
-write.table (ASV.table, file="rarefied_ASV_table_before_funguild.txt",sep="\t",row.names=F, quote=F)
+write.table (ASV.table, file="rarefied_ASV_table_funguild.txt",sep="\t",row.names=F, quote=F)
