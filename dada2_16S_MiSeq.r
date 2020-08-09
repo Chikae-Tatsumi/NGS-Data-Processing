@@ -99,7 +99,7 @@ ps
 
 # Remove 
 ps_removed = subset_taxa(ps, 
-                     Family  != "mitochondria" &
+                     Family  != "Mitochondria" &
                          Class   != "Chloroplast" &
                         Kingdom  != "NA")
 
