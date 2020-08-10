@@ -33,8 +33,8 @@ names(filtFs) <- sample.names
 names(filtRs) <- sample.names
 
 out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(240,160),
-              maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE,
-              compress=TRUE, multithread=FALSE) # On Windows set multithread=FALSE
+              maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE, 
+              compress=TRUE, multithread=FALSE, trimLeft=c(20,19)) # On Windows set multithread=FALSE
 head(out)
 # If too few reads are passing the filter, consider relaxing maxEE, perhaps especially on the reverse reads (eg. maxEE=c(2,5)), and reducing the truncLen to remove low quality tails
 # Learn the Error Rates
