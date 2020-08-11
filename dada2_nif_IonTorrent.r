@@ -7,7 +7,8 @@ library(ShortRead); packageVersion("ShortRead")
 library(phyloseq); packageVersion("phyloseq")
 library(Biostrings); packageVersion("Biostrings")
 
-DATABASE = "~/R/Database/seqDatabase1.fasta.txt"
+DATABASE = "~/R/Database/nifH_dada2_all_v1.fasta"
+# See https://github.com/moyn413/nifHdada2
 setwd("~/R/Analysis/1_Test/nif")  ## CHANGE ME to the directory containing the fastq files.
 filez <- list.files()
 file.rename(from=filez, to=sub(pattern=".fastq", replacement=".fastq.gz", filez))
