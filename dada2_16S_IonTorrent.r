@@ -9,14 +9,14 @@ library(Biostrings); packageVersion("Biostrings")
 
 DATABASE = "~/R/Database/tax/silva_nr_v132_train_set.fa.gz"
 setwd("~/R/Analysis/1_Test/16S")  ## CHANGE ME to the directory containing the fastq files.
-list.files()
-# a set of Illumina-sequenced paired-end fastq files that have been split by sample and from which the barcodes/adapters have already been removed
+filez <- list.files()
+file.rename(from=filez, to=sub(pattern=".fastq", replacement=".fastq.gz", filez))
 
 # Define which is forward fastq and reverse fastq
 # Forward and reverse fastq filenames have format: SAMPLENAME_R1_001.fastq and SAMPLENAME_R2_001.fastq
 # fnFs <- sort(list.files(getwd(), pattern="_R1_001.fastq", full.names = TRUE))
 # fnRs <- sort(list.files(getwd(), pattern="_R2_001.fastq", full.names = TRUE))
-fnFs <- sort(list.files(getwd(), pattern = ".fastq", full.names = TRUE))
+fnFs <- sort(list.files(getwd(), pattern = ".fastq.gz", full.names = TRUE))
 
 # Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq
 sample.names <- sapply(strsplit(basename(fnFs), ".fastq"), `[`, 1)
