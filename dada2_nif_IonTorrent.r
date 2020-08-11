@@ -9,11 +9,12 @@ library(Biostrings); packageVersion("Biostrings")
 
 DATABASE = "~/R/Database/nifH_database_2012.fasta"
 setwd("~/R/Analysis/1_Test/nif")  ## CHANGE ME to the directory containing the fastq files.
-list.files()
+filez <- list.files()
+file.rename(from=filez, to=sub(pattern=".fastq", replacement=".fastq.gz", filez))
 
 # fnFs <- sort(list.files(getwd(), pattern = "_R1_001.fastq", full.names = TRUE))
 # fnRs <- sort(list.files(getwd(), pattern = "_R2_001.fastq", full.names = TRUE)
-fnFs <- sort(list.files(getwd(), pattern = ".fastq", full.names = TRUE))
+fnFs <- sort(list.files(getwd(), pattern = ".fastq.gz", full.names = TRUE))
 
 #Identify primers
 # FWD <- "CTTGGTCATTTAGAGGAAGTAA"  ## ITS1f
@@ -35,7 +36,7 @@ FWD.orients <- allOrients(FWD)
 REV.orients <- allOrients(REV)
 FWD.orients
 
-get.sample.name <- function(fname) strsplit(basename(fname), "_")[[1]][1]
+get.sample.name <- function(fname) strsplit(basename(fname), ".fastq")[[1]][1]
 sample.names <- unname(sapply(fnFs, get.sample.name ))
 head(sample.names)
 fnFs.filtN <- file.path(getwd(), "filtN", paste0(sample.names, ".fastq.gz"))
@@ -101,10 +102,10 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.cut[[1]]),
 # Forward and reverse fastq filenames have the format:
 # cutFs <- sort(list.files(path.cut, pattern = "_1.fastq.gz", full.names = TRUE))
 # cutRs <- sort(list.files(path.cut, pattern = "_2.fastq.gz", full.names = TRUE))
-cutFs <- sort(list.files(path.cut, pattern = ".fastq", full.names = TRUE))
+cutFs <- sort(list.files(path.cut, pattern = ".fastq.gz", full.names = TRUE))
 
 # Extract sample names, assuming filenames have format:
-get.sample.name <- function(fname) strsplit(basename(fname), "_")[[1]][1]
+get.sample.name <- function(fname) strsplit(basename(fname), ".fastq")[[1]][1]
 sample.names <- unname(sapply(cutFs, get.sample.name))
 head(sample.names)
 
