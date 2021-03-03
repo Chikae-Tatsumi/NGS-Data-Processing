@@ -5,8 +5,18 @@ library(seqinr)
 
 setwd("~/R/Database/Tax4Fun2")
 ASV.table <- read.table(file="ASV_table.txt",header=T,row.names=1)
+ASV <- ASV.table [,1:(ncol(ASV.table)-6)] # I've changed 7--> 6
+ASV <- cbind (rownames(ASV),ASV)
+ASV <- rbind (colnames(ASV),ASV)
+ASV[1,1] <- "ID"
+rownames(ASV) <- NULL 
+colnames(ASV) <- NULL
+write.table(ASV, "ASV.txt",sep="\t",col.names = F, row.names = F,quote=F)
 taxonomy <- read.table(file="taxonomy.txt",header=T, row.names=1)
-write.fasta (sequences = as.list(rownames(taxonomy)),names = rownames(ASV.table),file.out="seqs.fasta")
+tax <- subset(taxonomy,  Family  != "Mitochondria" &
+                         Class   != "Chloroplast" &
+                        Kingdom  != "NA")
+write.fasta (sequences = as.list(rownames(tax)),names = rownames(ASV.table),file.out="seqs.fasta")
 dir.create("Tax4Fun2")
 
 #Step 2: Generate your own reference datasets
@@ -23,10 +33,10 @@ generateUserData(path_to_reference_data ="Tax4Fun2_ReferenceData_v2", path_to_us
 runRefBlast(path_to_otus = "seqs.fasta" , path_to_reference_data ="Tax4Fun2_ReferenceData_v2", path_to_temp_folder = "Tax4Fun2", database_mode = "Ref99NR", use_force = T, num_threads = 6)
 # 2) Predicting functional profiles
 # Remove the first row's # and the second row's # of "17_otu_97_table_taxonomy.txt" --> "17_otu_97_table_taxonomy_tax4fun.txt"
-makeFunctionalPrediction(path_to_otu_table = "ASV_table.txt", path_to_reference_data = "Tax4Fun2_ReferenceData_v2", path_to_temp_folder = "Tax4Fun2", database_mode = "Ref99NR", normalize_by_copy_number = TRUE, min_identity_to_reference = 0.97, normalize_pathways = FALSE)
+makeFunctionalPrediction(path_to_otu_table = "ASV.txt", path_to_reference_data = "Tax4Fun2_ReferenceData_v2", path_to_temp_folder = "Tax4Fun2", database_mode = "Ref99NR", normalize_by_copy_number = TRUE, min_identity_to_reference = 0.97, normalize_pathways = FALSE)
 # note. normalize_pathways = FALSE will affiliate the rel. abundance of each KO to each pathway it belongs to. By setting it to true, the rel. abundance is equally distributed to all pathways it was assigned to.)
 
 #Step 4: Calculating (multi-)functional redundancy indices (experimental)
-calculateFunctionalRedundancy(path_to_otu_table = "ASV_table.txt", path_to_reference_data = "Tax4Fun2_ReferenceData_v2", path_to_temp_folder = "Tax4Fun2", database_mode = "Ref99NR", min_identity_to_reference = 0.97)
+calculateFunctionalRedundancy(path_to_otu_table = "ASV.txt", path_to_reference_data = "Tax4Fun2_ReferenceData_v2", path_to_temp_folder = "Tax4Fun2", database_mode = "Ref99NR", min_identity_to_reference = 0.97)
 
 # Don't forget to move the output file (Tax4Fun2) for your project file
