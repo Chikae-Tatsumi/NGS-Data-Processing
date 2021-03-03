@@ -7,12 +7,11 @@ taxonomy <- read.table(file="taxonomy.txt",header=T, row.names=1)
 write.fasta (sequences = as.list(rownames(taxonomy)),names = rownames(ASV.table),file.out="seqs.fasta")
 dir.create("Tax4Fun2")
 
-setwd("~/R/Database/Tax4Fun2")
 #Step 2: Generate your own reference datasets
 #1. Extracting SSU seqeunces (16S rRNA and 18S rRNA)
-extractSSU(genome_file = "OneProkaryoticGenome.fasta", file_extension = "fasta", path_to_reference_data ="Tax4Fun2_ReferenceData_v2")
+extractSSU(genome_file = "~/R/Database/Tax4Fun2/OneProkaryoticGenome.fasta", file_extension = "fasta", path_to_reference_data ="Tax4Fun2_ReferenceData_v2")
 #2. Assigning functions to prokayotic genomes
-assignFunction(genome_file = "OneProkaryoticGenome.fasta", file_extension = "fasta", path_to_reference_data = "Tax4Fun2_ReferenceData_v2", num_of_threads = 1, fast = TRUE)
+assignFunction(genome_file = "~/R/Database/Tax4Fun2/OneProkaryoticGenome.fasta", file_extension = "fasta", path_to_reference_data = "Tax4Fun2_ReferenceData_v2", num_of_threads = 1, fast = TRUE)
 #3. Generate the reference data
 generateUserData(path_to_reference_data ="Tax4Fun2_ReferenceData_v2", path_to_user_data = ".", name_of_user_data = "User_Ref0", SSU_file_extension = "_16SrRNA.ffn", KEGG_file_extension = "_funPro.txt")
 
