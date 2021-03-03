@@ -1,12 +1,13 @@
 library(Tax4Fun2)
 library(seqinr)
 
-setwd("~/R/Database/Tax4Fun2")
+setwd("~/R/Analysis/1_Test")
 ASV.table <- read.table(file="ASV_table.txt",header=T,row.names=1)
 taxonomy <- read.table(file="taxonomy.txt",header=T, row.names=1)
 write.fasta (sequences = as.list(rownames(taxonomy)),names = rownames(ASV.table),file.out="seqs.fasta")
 dir.create("Tax4Fun2")
 
+setwd("~/R/Database/Tax4Fun2")
 #Step 2: Generate your own reference datasets
 #1. Extracting SSU seqeunces (16S rRNA and 18S rRNA)
 extractSSU(genome_file = "OneProkaryoticGenome.fasta", file_extension = "fasta", path_to_reference_data ="Tax4Fun2_ReferenceData_v2")
