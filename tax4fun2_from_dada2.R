@@ -1,7 +1,7 @@
 library(Tax4Fun2)
 library(seqinr)
 
-setwd("~/R/Analysis/1_Test")
+setwd("~/R/Analysis/1_Test/16S/MiSeq")
 ASV.table <- read.table(file="ASV_table.txt",header=T,row.names=1)
 taxonomy <- read.table(file="taxonomy.txt",header=T, row.names=1)
 write.fasta (sequences = as.list(rownames(taxonomy)),names = rownames(ASV.table),file.out="seqs.fasta")
