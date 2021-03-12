@@ -107,7 +107,7 @@ ps
 ps_removed = subset_taxa(ps,(
                              Family  != "Mitochondria"|is.na(Family) &
                              Class   != "Chloroplast"|is.na(Class)  &
-                             Kingdom  != "NA" ))
+                             Kingdom  != "Eukaryota" ))
 
 #To output OTU table
 otu_table.t<-t(ps_removed@otu_table)
