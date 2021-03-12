@@ -103,7 +103,13 @@ ps <- merge_phyloseq(ps, dna)
 taxa_names(ps) <- paste0("ASV", seq(ntaxa(ps)))
 ps
 
+# Remove 
+ps_removed = subset_taxa(ps,(
+                             Family  != "Mitochondria"|is.na(Family) &
+                             Class   != "Chloroplast"|is.na(Class)  &
+                             Kingdom  != "NA" ))
+
 #To output OTU table
-otu_table.t<-t(ps@otu_table)
-ps.t<-cbind(otu_table.t,ps@tax_table)
+otu_table.t<-t(ps_removed@otu_table)
+ps.t<-cbind(otu_table.t,ps_removed@tax_table)
 write.table(ps.t,  file="ASV_table.txt")
