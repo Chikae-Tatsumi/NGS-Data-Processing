@@ -110,7 +110,7 @@ sample.names <- unname(sapply(cutFs, get.sample.name))
 head(sample.names)
 
 #Inspect read quality profiles
-plotQualityProfile(cutFs[1:2])
+# plotQualityProfile(cutFs[1:2])
 # plotQualityProfile(cutRs[1:2])
 
 #Filter and trim
