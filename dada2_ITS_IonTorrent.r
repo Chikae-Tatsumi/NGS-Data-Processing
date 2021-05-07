@@ -85,7 +85,7 @@ R2.flags <- paste("-G", REV, "-A", FWD.RC)
 #}
 
 for(i in seq_along(fnFs)) {
-  system2(cutadapt, args = c(R1.flags, "-n", 1,
+  system2(cutadapt, args = c(R1.flags, "-n", 2,
                             "-o", fnFs.cut[i],  # output file                             
                             fnFs.filtN[i])) # input files
 }
