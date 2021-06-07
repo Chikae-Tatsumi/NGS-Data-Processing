@@ -56,7 +56,6 @@ system2(cutadapt, args = "--version") # Run shell commands from R
 path.cut <- file.path(getwd(), "cutadapt")
 if(!dir.exists(path.cut)) dir.create(path.cut)
 fnFs.cut <- file.path(path.cut, basename(fnFs))
-# fnRs.cut <- file.path(path.cut, basename(fnRs))
 fnRs.cut <- file.path(path.cut, basename(fnFs)) # dummy file
 
 FWD.RC <- dada2:::rc(FWD)
