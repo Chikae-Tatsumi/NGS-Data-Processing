@@ -12,14 +12,9 @@ setwd("~/R/Analysis/1_Test/ITS")  ## CHANGE ME to the directory containing the f
 filez <- list.files()
 file.rename(from=filez, to=sub(pattern=".fastq", replacement=".fastq.gz", filez))
 
-# fnFs <- sort(list.files(getwd(), pattern = "_R1_001.fastq", full.names = TRUE))
-# fnRs <- sort(list.files(getwd(), pattern = "_R2_001.fastq", full.names = TRUE)
 fnFs <- sort(list.files(getwd(), pattern = ".fastq", full.names = TRUE))
 
 #Identify primers
-# FWD <- "CTTGGTCATTTAGAGGAAGTAA"  ## ITS1f
-# REV <- "GCTGCGTTCTTCATCGATGC"  ## ITS2
-
 FWD <-	"TCCGTAGGTGAACCTGCGG" ## ITS1
 REV <-	"GCTGCGTTCTTCATCGATGC" ## ITS2
 
@@ -42,9 +37,6 @@ head(sample.names)
 fnFs.filtN <- file.path(getwd(), "filtN", paste0(sample.names, ".fastq.gz"))
 
 #to “pre-filter” the sequences just to remove those with  ambiguous bases (Ns)
-# fnFs.filtN <- file.path(getwd(), "filtN", basename(fnFs)) # Put N-filterd files in filtN/ subdirectory
-# fnRs.filtN <- file.path(getwd(), "filtN", basename(fnRs))
-# filterAndTrim(fnFs, fnFs.filtN, fnRs, fnRs.filtN, maxN = 0, multithread = TRUE)
 filterAndTrim(fnFs, fnFs.filtN, maxN = 0, multithread = TRUE)
 
 # Identifying and counting the primers on one set of paired end FASTQ files(Sufficient, because all the files were created using the same library preparation)
@@ -53,10 +45,6 @@ primerHits <- function(primer, fn) {
     nhits <- vcountPattern(primer, sread(readFastq(fn)), fixed = FALSE)
     return(sum(nhits > 0))
 }
-# rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[1]]), 
-  #  FWD.ReverseReads = sapply(FWD.orients, primerHits, fn = fnRs.filtN[[1]]), 
-  #  REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.filtN[[1]]), 
-  #  REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.filtN[[1]]))
 
 rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[1]]), 
     REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.filtN[[1]]) )
@@ -78,30 +66,16 @@ R1.flags <- paste("-g", FWD, "-a", REV.RC)
 # Trim REV and the reverse-complement of FWD off of R2 (reverse reads)
 R2.flags <- paste("-G", REV, "-A", FWD.RC) 
 # Run Cutadapt
-# for(i in seq_along(fnFs)) {
-#  system2(cutadapt, args = c(R1.flags, R2.flags, "-n", 2, # -n 2 required to remove FWD and REV from reads
-#                             "-o", fnFs.cut[i], "-p", fnRs.cut[i], # output files
-#                             fnFs.filtN[i], fnRs.filtN[i])) # input files
-#}
-
 for(i in seq_along(fnFs)) {
   system2(cutadapt, args = c(R1.flags, "-n", 2,
                             "-o", fnFs.cut[i],  # output file                             
                             fnFs.filtN[i])) # input files
 }
 
-
-# rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.cut[[1]]), 
-#    FWD.ReverseReads = sapply(FWD.orients, primerHits, fn = fnRs.cut[[1]]), 
-#    REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.cut[[1]]), 
-#    REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.cut[[1]]))
-
 rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.cut[[1]]), 
       REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.cut[[1]]))
 
 # Forward and reverse fastq filenames have the format:
-# cutFs <- sort(list.files(path.cut, pattern = "_1.fastq.gz", full.names = TRUE))
-# cutRs <- sort(list.files(path.cut, pattern = "_2.fastq.gz", full.names = TRUE))
 cutFs <- sort(list.files(path.cut, pattern = ".fastq.gz", full.names = TRUE))
 
 # Extract sample names, assuming filenames have format:
@@ -109,16 +83,8 @@ get.sample.name <- function(fname) strsplit(basename(fname), ".fastq")[[1]][1]
 sample.names <- unname(sapply(cutFs, get.sample.name))
 head(sample.names)
 
-#Inspect read quality profiles
-# plotQualityProfile(cutFs[1:2])
-# plotQualityProfile(cutRs[1:2])
-
 #Filter and trim
 filtFs <- file.path(path.cut, "filtered", basename(cutFs))
-# filtRs <- file.path(path.cut, "filtered", basename(cutRs))
-
-# out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, maxN = 0, maxEE = c(2, 2), 
-#    truncQ = 2, minLen = 50, rm.phix = TRUE, compress = TRUE, multithread = TRUE)  # on windows, set multithread = FALSE
 
 out <- filterAndTrim(cutFs, filtFs, maxN = 0, maxEE = 2,
     truncQ = 2, minLen = 50, rm.phix = TRUE, compress = TRUE, multithread = TRUE)  # on windows, set multithread = FALSE
@@ -126,28 +92,17 @@ head(out)
 
 #Learn the Error Rates
 errF <- learnErrors(filtFs, multithread = TRUE)
-# errR <- learnErrors(filtRs, multithread = TRUE)
-
 plotErrors(errF, nominalQ = TRUE)
 
 #Dereplicate identical reads
 derepFs <- derepFastq(filtFs, verbose = TRUE)
-# derepRs <- derepFastq(filtRs, verbose = TRUE)
 # Name the derep-class objects by the sample names
 names(derepFs) <- sample.names
-# names(derepRs) <- sample.names
 
 #Sample Inference
 dadaFs <- dada(derepFs, err = errF, multithread = TRUE)
-# dadaRs <- dada(derepRs, err = errR, multithread = TRUE)
-
-
-#Merge paired reads
-# mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE)
 
 #Construct Sequence Table
-# seqtab <- makeSequenceTable(mergers)
-
 #see https://github.com/benjjneb/dada2/issues/384
 seqtab <- makeSequenceTable(dadaFs)
 dim(seqtab)
@@ -159,15 +114,9 @@ table(nchar(getSequences(seqtab.nochim)))
 
 #Track reads through the pipeline
 getN <- function(x) sum(getUniques(x))
-# track <- cbind(out, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(mergers, 
-#    getN), rowSums(seqtab.nochim))
 
 track <- cbind(out, sapply(dadaFs, getN), rowSums(seqtab.nochim))
-
 # If processing a single sample, remove the sapply calls: e.g. replace
-# sapply(dadaFs, getN) with getN(dadaFs)
-# colnames(track) <- c("input", "filtered", "denoisedF", "denoisedR", "merged", 
-#     "nonchim")
 
 colnames(track) <- c("input", "filtered", "denoisedF", "nonchim")
 
