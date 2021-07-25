@@ -7,7 +7,7 @@ library(ShortRead); packageVersion("ShortRead")
 library(phyloseq); packageVersion("phyloseq")
 library(Biostrings); packageVersion("Biostrings")
 
-DATABASE = "~/R/Database/sh_general_release_dynamic_02.02.2019.fasta"
+DATABASE = "~/R/Database/sh_general_release_dynamic_all_10.05.2021.fasta"
 setwd("~/R/Analysis/1_Test/ITS")  ## CHANGE ME to the directory containing the fastq files.
 filez <- list.files()
 file.rename(from=filez, to=sub(pattern=".fastq", replacement=".fastq.gz", filez))
@@ -142,13 +142,16 @@ ps <- merge_phyloseq(ps, dna)
 taxa_names(ps) <- paste0("ASV", seq(ntaxa(ps)))
 ps
 
-#To output OTU table
-otu_table.t<-t(ps@otu_table)
-ps.t<-cbind(otu_table.t,ps@tax_table)
+# To rmove not-fungal OTUs
+ps_removed = subset_taxa(ps,(Kingdom  == "k__Fungi" ))
+                             
+#To output OTU table
+otu_table.t<-t(ps_removed@otu_table)
+ps.t<-cbind(otu_table.t,ps_removed@tax_table)
 write.table(ps.t,  file="ASV_table.txt")
 
 # Rarefication
-ps.rarefied = rarefy_even_depth(ps, rngseed=1, sample.size=0.9*min(sample_sums(ps)), replace=F)
+ps.rarefied = rarefy_even_depth(ps_removed, rngseed=1, sample.size=min(sample_sums(ps_removed)), replace=F)
 otu_table.t<-t(ps.rarefied@otu_table)
 ps.t<-cbind(otu_table.t,ps.rarefied@tax_table)
 write.table(ps.t,  file="rarefied_ASV_table.txt")
