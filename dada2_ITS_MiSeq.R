@@ -50,7 +50,7 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[1]]),
 # See https://github.com/benjjneb/dada2/issues/977
 
 #Remove Primers
-cutadapt <- "/miniconda2/bin/cutadapt" 
+cutadapt <- "/Users/chikae/opt/miniconda3/envs/cutadaptenv/bin/cutadapt" 
 system2(cutadapt, args = "--version") # Run shell commands from R
 
 path.cut <- file.path(getwd(), "cutadapt")
