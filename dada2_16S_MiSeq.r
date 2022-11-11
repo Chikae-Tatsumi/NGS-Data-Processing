@@ -32,7 +32,7 @@ filtRs <- file.path(getwd(), "filtered", paste0(sample.names, "_R_filt.fastq.gz"
 names(filtFs) <- sample.names
 names(filtRs) <- sample.names
 
-out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(240,160),
+out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen=c(210,210),
               maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE, 
               compress=TRUE, multithread=FALSE, trimRight=c(32,31)) # On Windows set multithread=FALSE
 # R1 contains RC of 806r primer (20) + Linker (2) + Pad (10)
