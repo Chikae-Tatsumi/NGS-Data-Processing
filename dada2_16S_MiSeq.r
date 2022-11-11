@@ -1,5 +1,5 @@
 #DADA2 Pipeline Tutorial (1.12)
-#See http://benjjneb.github.io/dada2/tutorial.html
+#See https://benjjneb.github.io/dada2/tutorial_1_8.html
 
 #Getting ready
 library(dada2); packageVersion("dada2")
@@ -45,9 +45,16 @@ errF <- learnErrors(filtFs, multithread=TRUE)
 errR <- learnErrors(filtRs, multithread=TRUE)
 plotErrors(errF, nominalQ=TRUE) #plot
 
+# Dereplication
+derepFs <- derepFastq(filtFs, verbose=TRUE)
+derepRs <- derepFastq(filtRs, verbose=TRUE)
+# Name the derep-class objects by the sample names
+names(derepFs) <- sample.names
+names(derepRs) <- sample.names
+
 # Sample Inference
-dadaFs <- dada(filtFs, err=errF, multithread=TRUE)
-dadaRs <- dada(filtRs, err=errR, multithread=TRUE)
+dadaFs <- dada(derepFs, err=errF, multithread=TRUE)
+dadaRs <- dada(derepRs, err=errR, multithread=TRUE)
 
 # Merge paired reads
  mergers <- mergePairs(dadaFs, filtFs, dadaRs, filtRs, verbose=TRUE)
