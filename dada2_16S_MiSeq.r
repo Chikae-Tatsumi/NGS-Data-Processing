@@ -83,12 +83,6 @@ head(taxa.print)
 write.table(taxa,file="taxonomy.txt")
 write.table(seqtab.nochim,file="seqtabnochim.txt")
 
-taxa.print <- taxa  # Removing sequence rownames for display only
-rownames(taxa.print) <- NULL
-head(taxa.print)
-write.table(taxa, file="taxonomy.txt")
-write.table(seqtab.nochim, file="seqtabnochim.txt")
-
 samples.out<-rownames(seqtab.nochim)
 ps <- phyloseq(otu_table(seqtab.nochim, taxa_are_rows=FALSE), 
                          tax_table(taxa))
