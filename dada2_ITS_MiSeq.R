@@ -18,8 +18,8 @@ fnRs
 
 #Identify primers
 
-FWD <- "CTTGGTCATTTAGAGGAAGTAA"  ## ITS1f
-REV <- "GCTGCGTTCTTCATCGATGC"  ## ITS2
+FWD <- "GTGARTCATCGAATCTTTG"  ## fITS7
+REV <- "TCCTCCGCTTATTGATATGC"  ## ITS4
 
 allOrients <- function(primer) {
     # Create all orientations of the input sequence
@@ -47,6 +47,8 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs.filtN[[1]]),
     REV.ForwardReads = sapply(REV.orients, primerHits, fn = fnFs.filtN[[1]]), 
     REV.ReverseReads = sapply(REV.orients, primerHits, fn = fnRs.filtN[[1]]))
     
+# See https://github.com/benjjneb/dada2/issues/977
+
 #Remove Primers
 cutadapt <- "/miniconda2/bin/cutadapt" 
 system2(cutadapt, args = "--version") # Run shell commands from R
