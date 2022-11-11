@@ -89,6 +89,7 @@ head(sample.names)
 #Inspect read quality profiles
 plotQualityProfile(cutFs[1:2])
 plotQualityProfile(cutRs[1:2])
+# See https://github.com/benjjneb/dada2/issues/1316
 
 #Filter and trim
 filtFs <- file.path(path.cut, "filtered", basename(cutFs))
@@ -97,6 +98,10 @@ filtRs <- file.path(path.cut, "filtered", basename(cutRs))
 out <- filterAndTrim(cutFs, filtFs, cutRs, filtRs, maxN = 0, maxEE = c(2, 2), 
     truncQ = 2, minLen = 50, rm.phix = TRUE, compress = TRUE, multithread = TRUE)  # on windows, set multithread = FALSE
 head(out)
+
+#Inspect read quality profiles
+plotQualityProfile(filtFs[1:2])
+plotQualityProfile(filtRs[1:2])
 
 #Learn the Error Rates
 errF <- learnErrors(filtFs, multithread = TRUE)
