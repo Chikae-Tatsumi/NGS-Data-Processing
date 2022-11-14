@@ -105,7 +105,9 @@ plotQualityProfile(filtRs[1:2])
 
 #Learn the Error Rates
 errF <- learnErrors(filtFs, multithread = TRUE)
+errR <- learnErrors(filtRs, multithread = TRUE)
 plotErrors(errF, nominalQ = TRUE)
+plotErrors(errR, nominalQ = TRUE)
 
 #Dereplicate identical reads
 derepFs <- derepFastq(filtFs, verbose = TRUE)
