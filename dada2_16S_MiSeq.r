@@ -36,7 +36,7 @@ out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs,
                      # truncLen=c(210,210),
                      minLen = 100,
               maxN=0, maxEE=c(2,2), truncQ=2, rm.phix=TRUE, 
-              compress=TRUE, multithread=FALSE, trimRight=c(32,31)) # On Windows set multithread=FALSE
+              compress=TRUE, multithread=TRUE, trimRight=c(32,31)) # On Windows set multithread=FALSE
 # R1 contains RC of 806r primer (20) + Linker (2) + Pad (10)
 # R2 contains RC of 515f primer (19) + Linker (2) + Pad (10)
 
