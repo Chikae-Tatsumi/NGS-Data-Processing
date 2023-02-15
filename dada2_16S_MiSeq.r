@@ -162,18 +162,17 @@ taxa_names(ps) <- paste0("ASV", seq(ntaxa(ps)))
 ps
 
 # Remove 
-ps_removed = subset_taxa(ps, 
-                     Family  != "Mitochondria" &
-                         Class   != "Chloroplast" &
-                        Kingdom  != "NA")
+ps_removed_1 = subset_taxa(ps,(Kingdom=="Bacteria"))
+ps_removed_2 = subset_taxa(ps_removed_1,(Family  != "Mitochondria"|is.na(Family) &
+                             Order   != "Chloroplast"|is.na(Order))
 
 #To output OTU table
-otu_table.t<-t(ps_removed@otu_table)
-ps.t<-cbind(otu_table.t,ps_removed@tax_table)
+otu_table.t<-t(ps_removed_2@otu_table)
+ps.t<-cbind(otu_table.t,ps_removed_2@tax_table)
 write.table(ps.t,  file="ASV_table.txt")
 
 # Rarefication
-ps.rarefied = rarefy_even_depth(ps_removed, rngseed=1, sample.size=0.9*min(sample_sums(ps_removed)), replace=F)
+ps.rarefied = rarefy_even_depth(ps_removed_2, rngseed=1, sample.size=0.9*min(sample_sums(ps_removed)), replace=F)
 otu_table.t<-t(ps.rarefied@otu_table)
 ps.t<-cbind(otu_table.t,ps.rarefied@tax_table)
 write.table(ps.t,  file="rarefied_ASV_table.txt")
